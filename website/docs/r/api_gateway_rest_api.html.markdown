@@ -32,6 +32,19 @@ resource "aws_api_gateway_rest_api" "example" {
 }
 ```
 
+### Private Endpoint Type in a VPC
+
+```hcl
+resource "aws_api_gateway_rest_api" "example" {
+  name = "private-example"
+
+  endpoint_configuration {
+    types = ["PRIVATE"]
+    vpc_endpoint_ids = ["vpce-0123456789"]
+  }
+}
+```
+
 ## Argument Reference
 
 The following arguments are supported:
@@ -59,6 +72,7 @@ __Note__: If the `body` argument is provided, the OpenAPI specification will be 
 ### endpoint_configuration
 
 * `types` - (Required) A list of endpoint types. This resource currently only supports managing a single value. Valid values: `EDGE`, `REGIONAL` or `PRIVATE`. If unspecified, defaults to `EDGE`. Must be declared as `REGIONAL` in non-Commercial partitions. Refer to the [documentation](https://docs.aws.amazon.com/apigateway/latest/developerguide/create-regional-api.html) for more information on the difference between edge-optimized and regional APIs.
+* `vpc_endpoint_ids` - (Optional) A list of VPC identifiers. The API endpoint must be declared as `PRIVATE` for VPC IDs to be assigned.
 
 ## Attributes Reference
 
